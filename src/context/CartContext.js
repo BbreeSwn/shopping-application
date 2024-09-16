@@ -1,4 +1,5 @@
 import {creatContext , useContext}  from "react"
+import products from "../data/Product"
 
 //สร้าง context
 const CartContext = creatContext()
