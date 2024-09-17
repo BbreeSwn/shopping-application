@@ -24,6 +24,19 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: "REMOVE", payload: id });
   }
 
+  // เพิ่มปริมาณสินค้า
+function addQuantity(id){
+console.log("add quantity = " +id);
+dispatch({type:"ADD" , payload:id})
+}
+
+// ลดปริมาณสินค้่าในตะกร้า
+function decreaseQuantity(id){
+  console.log("decrease quantity = " +id);
+  dispatch({type:"DECREASE" , payload:id})
+  }
+
+
   // คำนวนราคารวมของสินค้า
   useEffect(() => {
     dispatch({ type: "CALCULATE_TOTAL" });
@@ -32,7 +45,7 @@ export const CartProvider = ({ children }) => {
 
   //ส่ง function ออกไปใช้งาน ผ่าน cartContext.Provider
   return (
-    <CartContext.Provider value={{ ...state, formatMoney, removeItem }}>
+    <CartContext.Provider value={{ ...state, formatMoney, removeItem , addQuantity,decreaseQuantity }}>
       {children}
     </CartContext.Provider>
   );

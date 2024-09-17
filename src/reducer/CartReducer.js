@@ -1,5 +1,3 @@
-import products from "../data/Product";
-
 const cartReducer = (state, action) => {
   //กระบวนการจัดการ State ผ่าน Action
   if (action.type === "CALCULATE_TOTAL") {
@@ -9,25 +7,59 @@ const cartReducer = (state, action) => {
         const totalprice = price * quantity; // ยอดรวมสินค้าแต่ละรายการ
         cartTotal.total += totalprice; // จำนวนเงินรวม
         cartTotal.amount += quantity; // ปริมาณเงินรวม
-        return cartTotal
+        return cartTotal;
       },
       {
         total: 0,
         amount: 0,
       }
     );
-return {
-    ...state,
-    total,
-    amount
-}
+    return {
+      ...state,
+      total,
+      amount,
+    };
   }
 
   // สร้าง action remove item
-  if(action.type === "REMOVE" ){
+  if (action.type === "REMOVE") {
+    return {
+      ...state,
+      products: state.products.filter((item) => item.id !== action.payload),
+    };
+  }
+
+  // add quantity products
+  if (action.type === "ADD") {
+    let updateProduct = state.products.map((item) => {
+      if (item.id === action.payload) {
+        return {
+          ...item,
+          quantity:item.quantity+1
+        }
+      }
+      return item;
+    });
     return{
       ...state,
-      products:state.products.filter((item)=>item.id !== action.payload)
+      products:updateProduct
+    }
+  }
+
+  // decrease quantity products
+  if (action.type === "DECREASE") {
+    let updateProduct = state.products.map((item) => {
+      if (item.id === action.payload) {
+        return {
+          ...item,
+          quantity:item.quantity-1
+        }
+      }
+      return item;
+    }).filter((item) => item.quantity !== 0)
+    return{
+      ...state,
+      products:updateProduct
     }
   }
 };
