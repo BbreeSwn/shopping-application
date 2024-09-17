@@ -3,7 +3,7 @@ import "./Item.css"
 
 export default function Item(props) {
   const { id, name, price, image, quantity } = props;
-  const {formatMoney} = useCart()
+  const {formatMoney , removeItem} = useCart()
   return (
     <div className="card">
       <img src={image} alt={id} />
@@ -17,7 +17,7 @@ export default function Item(props) {
         <button className="add">+</button>
       </div>
       <div className="total-price">{formatMoney(quantity * price)}</div>
-      <button>Delete item</button>
+      <button onClick={()=>removeItem(id)} >Delete item</button>
     </div>
   );
 }
